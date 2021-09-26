@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Hernando N. Pinzon',
                 'email' => 'hernandonunez13@gmail.com',
-                'password' => Hash::make('Hernando N. Pinzon'),
+                'password' => Hash::make('hola123'),
                 'type' => 'admin',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
