@@ -22,6 +22,7 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\RestaurantController::class, 'showFrontPage'])->name('home');
 
-Route::get('/restaurants', [App\Http\Controllers\RestaurantController::class, 'index'])->name('frotn_page.index');
+Route::get('/restaurants', [App\Http\Controllers\RestaurantController::class, 'index'])->name('restaurants.index');
+Route::get('/restaurants/{restaurant}', [App\Http\Controllers\RestaurantController::class, 'show'])->name('restaurants.show');
 
 
