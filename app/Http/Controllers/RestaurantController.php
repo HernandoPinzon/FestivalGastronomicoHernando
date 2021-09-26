@@ -85,4 +85,12 @@ class RestaurantController extends Controller
     {
         //
     }
+
+    public function showFrontPage(){
+
+        $restaurants = Restaurant::orderBy('name','asc')->get();
+        
+
+        return view('front_page.index', compact('restaurants'));
+    }
 }
