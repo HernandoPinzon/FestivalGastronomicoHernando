@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreRestaurantRequest;
 
 class RestaurantController extends Controller
 {
@@ -27,7 +31,8 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
+        return view("restaurants.create", compact('categories'));
     }
 
     /**
@@ -36,9 +41,34 @@ class RestaurantController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRestaurantRequest $request)
     {
-        //
+
+        /* $validated = $request->validate([
+            'name' => 'required|string|min:5|max:50',
+            'description' => 'required|min:10',
+            'city' => 'required|min:5|max:30',
+            'phone' => 'required|alpha_dash|min:5|max:10',
+            'category_id' => 'required|exists:categories,id',
+            'delivery' => [
+                'required',
+                Rule::in(['y','n'])
+            ],
+        ]); */
+
+        
+        $input = $request->all();
+        //intento de agregar el user id antes
+        //$input += [ "user_id" => ''.Auth::id() ];
+        //dd($input);
+        //Restaurant::create($input);
+
+        $restaurant = new Restaurant();
+        $restaurant->fill($input);
+        $restaurant->user_id = Auth::id();
+        $restaurant->save();
+        $flash = 'Restaurante agregado exitosamente';
+        return redirect(route('home'))->with($flash);
     }
 
     /**
@@ -86,10 +116,11 @@ class RestaurantController extends Controller
         //
     }
 
-    public function showFrontPage(){
+    public function showFrontPage()
+    {
 
-        $restaurants = Restaurant::orderBy('name','asc')->get();
-        
+        $restaurants = Restaurant::orderBy('name', 'asc')->get();
+
 
         return view('front_page.index', compact('restaurants'));
     }

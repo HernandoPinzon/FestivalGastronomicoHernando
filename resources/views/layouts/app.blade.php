@@ -76,6 +76,11 @@
         </nav>
 
         <main class="py-4">
+            @if (isset($flash))
+                <div class="alert alert-success" role="alert">
+                    {{$flash}}
+                </div>
+            @endif
             <div class="container">
                 @yield('content')
             </div>

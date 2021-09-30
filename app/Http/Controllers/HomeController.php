@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        //diferentes formas de where
+        $restaurants = Restaurant::where('user_id', Auth::id())->orderBy('name', 'asc')->get();
+        $restaurants = Auth::user()->restaurants;
+        $restaurants = Restaurant::owned(Auth::id())->orderBy('name', 'asc')->get();
+        
+        
+        return view('home.index',compact('restaurants'));
     }
 }
