@@ -7,7 +7,8 @@
         title="crear un nuevo restaurante">
             Crear Nuevo
     </a>
-
+    <br>
+    <br>
     <ul class="list-group list-group-flush">
         @foreach ($restaurants as $restaurant)
             <li class="list-group-item h4">

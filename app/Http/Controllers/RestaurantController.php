@@ -43,26 +43,8 @@ class RestaurantController extends Controller
      */
     public function store(StoreRestaurantRequest $request)
     {
-
-        /* $validated = $request->validate([
-            'name' => 'required|string|min:5|max:50',
-            'description' => 'required|min:10',
-            'city' => 'required|min:5|max:30',
-            'phone' => 'required|alpha_dash|min:5|max:10',
-            'category_id' => 'required|exists:categories,id',
-            'delivery' => [
-                'required',
-                Rule::in(['y','n'])
-            ],
-        ]); */
-
-        
+        //Se agrega el campo id que no trae por defecto el form
         $input = $request->all();
-        //intento de agregar el user id antes
-        //$input += [ "user_id" => ''.Auth::id() ];
-        //dd($input);
-        //Restaurant::create($input);
-
         $restaurant = new Restaurant();
         $restaurant->fill($input);
         $restaurant->user_id = Auth::id();
@@ -90,7 +72,8 @@ class RestaurantController extends Controller
      */
     public function edit(Restaurant $restaurant)
     {
-        //
+        $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
+        return view("restaurants.edit", compact('categories','restaurant'));
     }
 
     /**
@@ -100,9 +83,18 @@ class RestaurantController extends Controller
      * @param  \App\Models\Restaurant  $restaurant
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Restaurant $restaurant)
+    public function update(StoreRestaurantRequest $request, Restaurant $restaurant)
     {
-        //
+        //Se agrega el campo id que no debe traer por defecto el form
+        $input = $request->all();
+
+        //TODO:validar
+
+        $restaurant->fill($input);
+        $restaurant->user_id = Auth::id();
+        $restaurant->save();
+        $flash = 'Restaurante editado exitosamente';
+        return redirect(route('home'))->with($flash);
     }
 
     /**
