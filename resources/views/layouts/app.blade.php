@@ -76,9 +76,14 @@
         </nav>
 
         <main class="py-4">
-            @if (isset($flash))
+            @if (Session::has('success'))
                 <div class="alert alert-success" role="alert">
-                    {{$flash}}
+                    {{Session::get('success')}}
+                </div>
+            @endif
+            @if (Session::has('failure'))
+                <div class="alert alert-danger" role="alert">
+                    {{Session::get('failure')}}
                 </div>
             @endif
             <div class="container">

@@ -26,7 +26,7 @@
             {!! Form::submit('Editar', ['class'=>'btn btn-primary']) !!}
         @endif
         
-        <a href="{{ route ('home')}}" class="btn btn-secondary">Cancelar</a>
+        <a href="{{ URL::previous()}}" class="btn btn-secondary">Cancelar</a>
 
     {{Form::close()}}
 

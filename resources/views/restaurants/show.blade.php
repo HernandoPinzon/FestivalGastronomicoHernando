@@ -16,4 +16,17 @@
         @endif
         mas informacion al numero {{$restaurant->phone}}
     </h4>
+
+    <div class="row mt-4 justify-content-end">
+        <div class="col-2 aling-self-end">
+            <a class="btn btn-warning" href="{{ route('restaurants.edit', $restaurant->id) }}">Editar</a>
+        </div>
+        <div class="col-1 aling-self-end">
+            @include('restaurants.form_delete')
+        </div>
+    </div>
+    
+
+    
+
 @endsection
